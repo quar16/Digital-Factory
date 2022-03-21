@@ -1,0 +1,2 @@
+C:\Users\god_s\Documents\Digital Factory\obj\Debug\SteamVR_Editor.csproj.AssemblyReference.cache
+C:\Users\god_s\Documents\Digital Factory\obj\Debug\SteamVR_Editor.csproj.CoreCompileInputs.cache
