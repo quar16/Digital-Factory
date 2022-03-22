@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.digitalfactory.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\god_s\\Documents\\Digital Factory\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\god_s\\Documents\\Digital-Factory\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "Digital Factory [Testing]"

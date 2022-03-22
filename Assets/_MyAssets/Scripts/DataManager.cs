@@ -24,11 +24,13 @@ public class DataManager
         string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
         string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
 
+        var _TestDataDictionary = TestDataDictionary;
+
         TestName testName = TestName.DED;
-        
+
         CSV.dataPath = Application.dataPath;
 
-        Thread _saveMapThread = new Thread(() =>
+        Thread _saveDataThread = new Thread(() =>
         {
             TestSummaryWrite();
 
@@ -39,8 +41,64 @@ public class DataManager
                 testName++;
             }
         });
-        _saveMapThread.Start();
+        _saveDataThread.Start();
         Debug.Log(ID + " Save Done");
+
+
+        void SingleTestWrite(TestName testName)
+        {
+            TestData data = _TestDataDictionary[testName];
+
+            var lists = CSV.Read("_MyAssets/CSVFormat/SingleTestData");
+
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            string[] keys = new string[lists[0].Keys.Count];
+            lists[0].Keys.CopyTo(keys, 0);
+
+            foreach (string str in keys)
+            {
+                dictionary.Add(str, "");
+            }
+
+            int count = data.leftClick.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[keys[0]] = data.time[i];
+
+                dictionary[keys[1]] = data.HMDpos[i].x;
+                dictionary[keys[2]] = data.HMDpos[i].y;
+                dictionary[keys[3]] = data.HMDpos[i].z;
+
+                dictionary[keys[4]] = data.HMDrot[i].x;
+                dictionary[keys[5]] = data.HMDrot[i].y;
+                dictionary[keys[6]] = data.HMDrot[i].z;
+
+                dictionary[keys[7]] = data.leftPos[i].x;
+                dictionary[keys[8]] = data.leftPos[i].y;
+                dictionary[keys[9]] = data.leftPos[i].z;
+
+                dictionary[keys[10]] = data.leftRot[i].x;
+                dictionary[keys[11]] = data.leftRot[i].y;
+                dictionary[keys[12]] = data.leftRot[i].z;
+
+                dictionary[keys[13]] = data.leftClick[i];
+
+                dictionary[keys[14]] = data.rightPos[i].x;
+                dictionary[keys[15]] = data.rightPos[i].y;
+                dictionary[keys[16]] = data.rightPos[i].z;
+
+                dictionary[keys[17]] = data.rightRot[i].x;
+                dictionary[keys[18]] = data.rightRot[i].y;
+                dictionary[keys[19]] = data.rightRot[i].z;
+
+                dictionary[keys[20]] = data.rightClick[i];
+
+                lists.Add(new Dictionary<string, object>(dictionary));
+            }
+
+            CSV.Write(lists, "_MyAssets/CSV/" + ID + "/" + testName.ToString());
+        }
     }
 
     static void TestSummaryWrite()

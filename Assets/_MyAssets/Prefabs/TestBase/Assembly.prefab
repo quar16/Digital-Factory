@@ -355,12 +355,10 @@ Transform:
   - {fileID: 8291151695607487971}
   - {fileID: 1335093400014217691}
   - {fileID: 8718990341993625599}
-  - {fileID: 657456758184218875}
-  - {fileID: 8643442557098315069}
-  - {fileID: 5548146807324017837}
   - {fileID: 4517309302016910334}
   - {fileID: 6049710615217070076}
   - {fileID: 4605245341989903445}
+  - {fileID: 2583019352269713514}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -511,7 +509,7 @@ GameObject:
   - component: {fileID: 905167971121015907}
   - component: {fileID: 7658172285160273123}
   m_Layer: 0
-  m_Name: Fbx_B-Pillar C
+  m_Name: B-Pillar C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -729,7 +727,7 @@ Transform:
   - {fileID: 332106969388098440}
   - {fileID: 6452679062653271536}
   m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1532690011897916371
 GameObject:
@@ -750,7 +748,7 @@ GameObject:
   - component: {fileID: 4353515555932820618}
   - component: {fileID: 7218677029177947357}
   m_Layer: 0
-  m_Name: Fbx_CarSeat_Cushion_Hip
+  m_Name: CarSeat_Cushion_Hip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1051,7 +1049,7 @@ GameObject:
   - component: {fileID: 633172195898070073}
   - component: {fileID: 4626713672688410021}
   m_Layer: 0
-  m_Name: Fbx_B-Pillar A
+  m_Name: B-Pillar A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1269,8 +1267,8 @@ Transform:
   - {fileID: 5496325435764013363}
   - {fileID: 6447743901620518797}
   - {fileID: 5120797805642684536}
-  m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 5
+  m_Father: {fileID: 2583019352269713514}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2122588655415057816
 GameObject:
@@ -1465,6 +1463,39 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.6250003, z: 0.7500001}
   m_Center: {x: -0.00000029802322, y: 0.06250037, z: 0.37500012}
+--- !u!1 &2311486364034544004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2583019352269713514}
+  m_Layer: 0
+  m_Name: Parts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2583019352269713514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311486364034544004}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 657456758184218875}
+  - {fileID: 8643442557098315069}
+  - {fileID: 5548146807324017837}
+  m_Father: {fileID: 175026386543750132}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2522506854176508689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,7 +1543,7 @@ GameObject:
   - component: {fileID: 8722944007623019190}
   - component: {fileID: 6665899429991468344}
   m_Layer: 0
-  m_Name: Fbx_sidemirror_A
+  m_Name: sidemirror_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1685,8 +1716,8 @@ Transform:
   - {fileID: 7378066873064700343}
   - {fileID: 5051321316210790268}
   - {fileID: 7087406079601625688}
-  m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 6
+  m_Father: {fileID: 2583019352269713514}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3244498093449295600
 GameObject:
@@ -1898,7 +1929,7 @@ GameObject:
   - component: {fileID: 6080008775498239858}
   - component: {fileID: 464829811793216494}
   m_Layer: 0
-  m_Name: Fbx_B-Pillar B
+  m_Name: B-Pillar B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2169,7 +2200,7 @@ Transform:
   - {fileID: 788617712887335732}
   - {fileID: 8545696785919436593}
   m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5246933140124253579
 GameObject:
@@ -2284,7 +2315,7 @@ GameObject:
   - component: {fileID: 8120824477870440539}
   - component: {fileID: 4438744191776848499}
   m_Layer: 0
-  m_Name: Fbx_CarSeat_Cushion_Back
+  m_Name: CarSeat_Cushion_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2486,8 +2517,8 @@ Transform:
   m_Children:
   - {fileID: 7393037059693850245}
   - {fileID: 7594547453076812803}
-  m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 4
+  m_Father: {fileID: 2583019352269713514}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6076588262649265525
 GameObject:
@@ -2556,7 +2587,7 @@ Transform:
   - {fileID: 6395861382106682285}
   - {fileID: 297806162492419459}
   m_Father: {fileID: 175026386543750132}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6556330089980863254
 GameObject:
@@ -2575,7 +2606,7 @@ GameObject:
   - component: {fileID: 1291741881806176387}
   - component: {fileID: 8159347610866708229}
   m_Layer: 0
-  m_Name: Fbx_CarSeat_Bone
+  m_Name: CarSeat_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3058,7 +3089,7 @@ GameObject:
   - component: {fileID: 8253115427618115101}
   - component: {fileID: 38774618668771974}
   m_Layer: 0
-  m_Name: Fbx_sidemirror_B
+  m_Name: sidemirror_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3261,7 +3292,7 @@ GameObject:
   - component: {fileID: 481355001896140907}
   - component: {fileID: 7527981225077829222}
   m_Layer: 0
-  m_Name: Fbx_CarSeat_Cushion_Head
+  m_Name: CarSeat_Cushion_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
