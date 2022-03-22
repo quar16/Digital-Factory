@@ -9,10 +9,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class CSV
 {
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
-
+    public static string dataPath;
     public static List<Dictionary<string, object>> Read(string filePath)
     {
-        StreamReader reader = new StreamReader(Application.dataPath + "/" + filePath + ".csv", Encoding.UTF8);
+        StreamReader reader = new StreamReader(dataPath + "/" + filePath + ".csv", Encoding.UTF8);
 
         string[] lines = Regex.Split(reader.ReadToEnd(), LINE_SPLIT_RE);
         string[] keyRow = SplitCsvLine(lines[0]);
@@ -61,6 +61,6 @@ public class CSV
             allText += "\n";
             allText += output[index];
         }
-            File.WriteAllText(Application.dataPath + "/" + filePath + ".csv", allText);
+            File.WriteAllText(dataPath + "/" + filePath + ".csv", allText);
     }
 }

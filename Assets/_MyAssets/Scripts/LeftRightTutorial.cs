@@ -25,20 +25,15 @@ public class LeftRightTutorial : MonoBehaviour
         if (leftDone)
         {
             FlowManager.FlowMessage = "LeftRightTutorialDone";
-            FlowManager.selectHand = Valve.VR.SteamVR_Input_Sources.LeftHand;
             indicdator.parent = leftController;
-            indicdator.transform.localPosition = Vector3.zero;
-            indicdator.transform.localEulerAngles = Vector3.zero;
-            gameObject.SetActive(false);
         }
         else if (rightDone)
         {
             FlowManager.FlowMessage = "LeftRightTutorialDone";
-            FlowManager.selectHand = Valve.VR.SteamVR_Input_Sources.RightHand;
             indicdator.parent = rightController;
-            indicdator.transform.localPosition = Vector3.zero;
-            indicdator.transform.localEulerAngles = Vector3.zero;
-            gameObject.SetActive(false);
         }
+        indicdator.transform.localPosition = Vector3.zero;
+        indicdator.transform.localEulerAngles = Vector3.zero;
+        gameObject.SetActive(false);
     }
 }

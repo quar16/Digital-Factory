@@ -43,6 +43,7 @@ public class Test_PBF : TestClass
         yield return TestStep("원재료 컨테이너 삽입", () => !carryingSupplyContainer, highLightArea[3]);
 
         testData.time1 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return TestStep("생산품 스테이션 도어 열기", () => productDoorOpen, productDoorLeftTrg, productDoorRightTrg);
 
@@ -67,6 +68,7 @@ public class Test_PBF : TestClass
         yield return TestStep("메인 도어 닫기", () => !mainDoor.isOpen, mainDoor.trigger);
 
         testData.time2 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
@@ -320,12 +322,12 @@ public class Test_PBF : TestClass
 
     public void LiftLeftOff()
     {
-        //liftLeftHold = false;
+        liftLeftHold = false;
     }
 
     public void LiftRightOff()
     {
-        //liftRightHold = false;
+        liftRightHold = false;
     }
 
     //1.236f

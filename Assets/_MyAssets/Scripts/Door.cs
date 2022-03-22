@@ -44,17 +44,20 @@ public class Door : MonoBehaviour
     }
     public void DoorHold()
     {
-        Vector3 doorNowVector = trigger.detector.transform.position - door.position;
-        if (!isAxisX)
-            doorNowVector = new Vector3(doorNowVector.x, 0, doorNowVector.z);
-        else
-            doorNowVector = new Vector3(0, doorNowVector.y, doorNowVector.z);
+        if (trigger.detector != null)
+        {
+            Vector3 doorNowVector = trigger.detector.transform.position - door.position;
+            if (!isAxisX)
+                doorNowVector = new Vector3(doorNowVector.x, 0, doorNowVector.z);
+            else
+                doorNowVector = new Vector3(0, doorNowVector.y, doorNowVector.z);
 
-        float angle = startAngle + Vector3.SignedAngle(firstVector, doorNowVector, door.up);
-        door.localEulerAngles = new Vector3(0, Mathf.Clamp(angle, 0, doorMax), 0);
+            float angle = startAngle + Vector3.SignedAngle(firstVector, doorNowVector, door.up);
+            door.localEulerAngles = new Vector3(0, Mathf.Clamp(angle, 0, doorMax), 0);
 
-        if (door.localEulerAngles.y > 90)
-            open = true;
+            if (door.localEulerAngles.y > 90)
+                open = true;
+        }
     }
     public void DoorOff()
     {

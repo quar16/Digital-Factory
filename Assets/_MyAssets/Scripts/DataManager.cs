@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using System.Threading;
 
 public enum TestName { DED, PBF, FDM, SLA, SLS, ASSEMBLY }
 
@@ -18,35 +19,28 @@ public class DataManager
 
     public static Dictionary<TestName, TestData> TestDataDictionary;
 
-
-    public static void LoadData()
-    {
-
-    }
-
-    public static IEnumerator SaveData()
+    public static void ThreadSaveData()
     {
         string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
         string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
 
         TestName testName = TestName.DED;
+        
+        CSV.dataPath = Application.dataPath;
 
-        TestSummaryWrite();
-
-        for (int i = 0; i < 6; i++)
+        Thread _saveMapThread = new Thread(() =>
         {
-            if (TestDataDictionary.ContainsKey(testName))
+            TestSummaryWrite();
+
+            for (int i = 0; i < 6; i++)
             {
-                SingleTestWrite(testName);
-                Debug.Log(testName + " Save Done");
+                if (TestDataDictionary.ContainsKey(testName))
+                    SingleTestWrite(testName);
+                testName++;
             }
-            else
-            {
-                Debug.Log(testName + " Was NotExcuted");
-            }
-            testName++;
-            yield return null;
-        }
+        });
+        _saveMapThread.Start();
+        Debug.Log(ID + " Save Done");
     }
 
     static void TestSummaryWrite()

@@ -16,4 +16,10 @@ public class MainSceneManager : MonoBehaviour
     {
         SceneLoader.Instance.SceneLoad(SCENE.RECORD);
     }
+
+    public void Start()
+    {
+        for (int i = 0; i < 7; i++)
+            FlowManager.isTestRun[i] = true;
+    }
 }

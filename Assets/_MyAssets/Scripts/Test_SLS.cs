@@ -57,7 +57,8 @@ public class Test_SLS : TestClass
         yield return TestStep("메인 도어 닫기", () => !mainLeftDoor.isOpen && !mainRightDoor.isOpen, mainLeftDoor.trigger, mainRightDoor.trigger);
 
         testData.time1 = Time.time - startTime;
-        
+        startTime = Time.time;
+
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
@@ -202,12 +203,12 @@ public class Test_SLS : TestClass
 
     public void LiftLeftOff()
     {
-        //liftLeftHold = false;
+        liftLeftHold = false;
     }
 
     public void LiftRightOff()
     {
-        //liftRightHold = false;
+        liftRightHold = false;
     }
 
     Vector3 leverNowPos;

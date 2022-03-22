@@ -57,6 +57,7 @@ public class TestClass : MonoBehaviour
         }
     }
 
+
     public virtual IEnumerator testContent()
     {
         yield break;

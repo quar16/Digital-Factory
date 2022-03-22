@@ -35,6 +35,7 @@ public class Test_FDM : TestClass
         result.gameObject.SetActive(true);
 
         testData.time1 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
@@ -50,6 +51,7 @@ public class Test_FDM : TestClass
         yield return TestStep("오븐 도어 닫기", () => !ovenDoor.isOpen, ovenDoor.trigger);
 
         testData.time2 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return TestStep("-캐니스터 제거-\n 캐니스터 베이 도어 열기", () => canisterDoor.isOpen, canisterDoor.trigger);
 

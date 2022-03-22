@@ -50,6 +50,7 @@ public class Test_SLA : TestClass
         product.gameObject.SetActive(true);
 
         testData.time1 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
@@ -62,6 +63,7 @@ public class Test_SLA : TestClass
         yield return TestStep("메인 도어 닫기", () => !upLeftDoor.isOpen && !upRightDoor.isOpen, upLeftDoor.trigger, upRightDoor.trigger);
 
         testData.time2 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return TestStep("하단의 서브 도어 열기", () => downDoor.isOpen, downDoor.trigger);
 

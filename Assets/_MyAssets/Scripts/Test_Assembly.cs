@@ -21,12 +21,19 @@ public class Test_Assembly : TestClass
     public AssemblePart ap_B_Pillar1;
     public AssemblePart ap_B_Pillar2;
 
+    public Transform[] samples;
+
     public override IEnumerator testContent()
     {
+        float startTime = Time.time;
+
         ol_SideMirror1.OutlineWidth = 3;
         ol_SideMirror2.OutlineWidth = 3;
-        
+
         yield return TestStep("사이드 미러 조립 - 1", () => ap_SideMirror1.isCombine);
+
+        testData.time1 = Time.time - startTime;
+        startTime = Time.time;
 
         ol_SideMirror1.OutlineWidth = 0;
         ol_SideMirror2.OutlineWidth = 0;
@@ -46,9 +53,12 @@ public class Test_Assembly : TestClass
 
         yield return TestStep("시트 조립 - 3", () => ap_Seat3.isCombine);
 
+        testData.time2 = Time.time - startTime;
+        startTime = Time.time;
+
         ol_Seat1.OutlineWidth = 0;
         ol_Seat4.OutlineWidth = 0;
-        
+
         ol_B_Pillar1.OutlineWidth = 3;
         ol_B_Pillar2.OutlineWidth = 3;
 
@@ -58,6 +68,8 @@ public class Test_Assembly : TestClass
         ol_B_Pillar3.OutlineWidth = 3;
 
         yield return TestStep("B 필러 조립 - 2", () => ap_B_Pillar2.isCombine);
+
+        testData.time3 = Time.time - startTime;
 
         ol_B_Pillar2.OutlineWidth = 0;
         ol_B_Pillar3.OutlineWidth = 0;
@@ -79,5 +91,13 @@ public class Test_Assembly : TestClass
         Destroy(ol_B_Pillar2.gameObject);
         Destroy(ol_B_Pillar3.gameObject);
         Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        foreach (Transform sample in samples)
+        {
+            sample.Rotate(new Vector3(0, 0.1f, 0));
+        }
     }
 }

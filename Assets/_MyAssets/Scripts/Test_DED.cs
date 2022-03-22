@@ -38,6 +38,7 @@ public class Test_DED : TestClass
         yield return TestStep("원재료 통 내려놓기", () => bottleLose, bottleTrg);
 
         testData.time1 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return TestStep("원재료 투입구 닫기", () => capClosed, capTrg);
 
@@ -48,6 +49,7 @@ public class Test_DED : TestClass
         result.SetActive(true);
 
         testData.time2 = Time.time - startTime;
+        startTime = Time.time;
 
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
