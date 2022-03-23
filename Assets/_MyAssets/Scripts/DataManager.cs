@@ -21,10 +21,11 @@ public class DataManager
 
     public static void ThreadSaveData()
     {
-        string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
-        string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
-
         var _TestDataDictionary = new Dictionary<TestName, TestData>(TestDataDictionary);
+        string _ID = ID;
+
+        string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", _ID);
+        string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
 
         TestName testName = TestName.DED;
 
@@ -40,7 +41,7 @@ public class DataManager
                     SingleTestWrite(testName);
                 testName++;
             }
-            Debug.Log(ID + " Save Done");
+            Debug.Log(_ID + " Save Done");
         });
         _saveDataThread.Start();
 
@@ -97,7 +98,7 @@ public class DataManager
                 lists.Add(new Dictionary<string, object>(dictionary));
             }
 
-            CSV.Write(lists, "_MyAssets/CSV/" + ID + "/" + testName.ToString());
+            CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + testName.ToString());
         }
     }
 

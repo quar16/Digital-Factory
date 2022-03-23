@@ -98,7 +98,7 @@ Material:
     - _Color: {r: 0.45280647, g: 0.9191189, b: 0.45602244, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TintColor: {r: 0.29529375, g: 0.534, b: 0.29693994, a: 0.46140295}
+    - _TintColor: {r: 0.2952937, g: 0.534, b: 0.29693988, a: 0.12153208}
     - g_vWorldAlignedNormalTangentU: {r: -1, g: 0, b: 0, a: 0}
     - g_vWorldAlignedNormalTangentV: {r: 0, g: 0, b: 1, a: 0}
     - g_vWorldAlignedTextureNormal: {r: 0, g: 1, b: 0, a: 0}
