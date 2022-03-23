@@ -56,7 +56,6 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\QuickOutline\Scripts\Outline.cs" />
     <Compile Include="Assets\_MyAssets\Scripts\HighLightManager.cs" />
     <Compile Include="Assets\EasyColliderEditor\Scripts\EasyColliderProperties.cs" />
     <Compile Include="Assets\_MyAssets\Scripts\TutorialMoveChecker.cs" />
@@ -117,14 +116,11 @@
     <Compile Include="Assets\EasyColliderEditor\Scripts\Shader\EasyColliderCompute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\QuickOutline\Resources\Shaders\OutlineMask.shader" />
     <None Include="Assets\EasyColliderEditor\Scripts\Shader\EasyColliderShader.shader" />
     <None Include="Assets\EasyColliderEditor\Scripts\Plugins\ECE_VHACD.dll" />
-    <None Include="Assets\QuickOutline\Readme.txt" />
     <None Include="Assets\EasyColliderEditor\Scripts\Plugins\VHACDLicense.txt" />
     <None Include="Assets\EasyColliderEditor\ThirdPartyNotices.txt" />
     <None Include="Assets\EasyColliderEditor\Scripts\Shader\EasyColliderMeshColliderPreview.shader" />
-    <None Include="Assets\QuickOutline\Resources\Shaders\OutlineFill.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -759,6 +755,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{0AB172BE-9B25-2B9D-67A3-F34310904A10}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="SteamVR_Input_Editor.csproj">
       <Project>{C09DFA7D-EBB8-EFBC-C793-8AF515DAA7E1}</Project>
       <Name>SteamVR_Input_Editor</Name>

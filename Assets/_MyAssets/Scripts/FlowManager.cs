@@ -75,7 +75,7 @@ public class FlowManager : MonoSingleton<FlowManager>
 
         yield return VRUI.ShowMessage("모든 공정이 완료되었습니다. 테스트를 종료합니다.");
 
-        StartCoroutine(TestEnd());
+        TestEnd();
     }
 
     IEnumerator Tutorial()
@@ -105,14 +105,11 @@ public class FlowManager : MonoSingleton<FlowManager>
     public void TestStop()
     {
         StopCoroutine(flow);
-        StartCoroutine(TestEnd());
+        TestEnd();
     }
 
-    public IEnumerator TestEnd()
+    public void TestEnd()
     {
-        yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
-        VRcamera.SetActive(false);
-        //yield return DataManager.SaveData();
         DataManager.ThreadSaveData();
         SceneLoader.Instance.SceneLoad(SCENE.MAIN);
     }

@@ -25,12 +25,12 @@ public class Test_FDM : TestClass
     {
         float startTime = Time.time;
 
-        yield return TestStep("캐니스터 베이 도어 열기", () => canisterDoor.isOpen, canisterDoor.trigger);
+        yield return TestStep("캐니스터 베이 도어 열기", () => canisterDoor.Opened, canisterDoor.trigger);
 
         yield return TestStep("캐니스터 삽입", () => canisterDone, canisterTrg, canisterHighLight);
 
 
-        yield return TestStep("캐니스터 베이 도어 닫기", () => !canisterDoor.isOpen, canisterDoor.trigger);
+        yield return TestStep("캐니스터 베이 도어 닫기", () => canisterDoor.Closed, canisterDoor.trigger);
 
         result.gameObject.SetActive(true);
 
@@ -41,25 +41,25 @@ public class Test_FDM : TestClass
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
 
-        yield return TestStep("제작 완료 \n 오븐 도어 열기", () => ovenDoor.isOpen, ovenDoor.trigger);
+        yield return TestStep("제작 완료 \n 오븐 도어 열기", () => ovenDoor.Opened, ovenDoor.trigger);
 
 
         yield return TestStep("생산품 꺼내기", () => !resultLose, resultTrg);
 
         yield return TestStep("생산품 카트로 이동", () => cart.CheckEvent(Layer.DOWN, State.ENTER, result), resultTrg, cart.downHighLight);
 
-        yield return TestStep("오븐 도어 닫기", () => !ovenDoor.isOpen, ovenDoor.trigger);
+        yield return TestStep("오븐 도어 닫기", () => ovenDoor.Closed, ovenDoor.trigger);
 
         testData.time2 = Time.time - startTime;
         startTime = Time.time;
 
-        yield return TestStep("-캐니스터 제거-\n 캐니스터 베이 도어 열기", () => canisterDoor.isOpen, canisterDoor.trigger);
+        yield return TestStep("-캐니스터 제거-\n 캐니스터 베이 도어 열기", () => canisterDoor.Opened, canisterDoor.trigger);
 
         yield return TestStep("빈 캐니스터 꺼내기", () => !canisterLose, canisterTrg, canisterHighLight);
 
         yield return TestStep("빈 캐니스터 카트로 이동", () => cart.CheckEvent(Layer.UP, State.ENTER, canister), cart.upHighLight);
 
-        yield return TestStep("캐니스터 베이 도어 닫기", () => !canisterDoor.isOpen, canisterDoor.trigger);
+        yield return TestStep("캐니스터 베이 도어 닫기", () => canisterDoor.Closed, canisterDoor.trigger);
 
         testData.time3 = Time.time - startTime;
 
@@ -88,6 +88,7 @@ public class Test_FDM : TestClass
 
                 canister.localEulerAngles = Vector3.zero;
                 canisterDone = true;
+                canisterLose = true;
                 return;
             }
         }

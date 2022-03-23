@@ -254,7 +254,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1747324317661774328}
-  - component: {fileID: 4844894671034495770}
   m_Layer: 0
   m_Name: ResinHighLightArea
   m_TagString: Untagged
@@ -270,25 +269,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2390788652410658213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.29, y: 0.92, z: -0.075}
+  m_LocalPosition: {x: -0.29, y: 0.9394, z: -0.075}
   m_LocalScale: {x: 2.02, y: 1, z: 1.29}
   m_Children: []
   m_Father: {fileID: 80329656120605275}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4844894671034495770
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2390788652410658213}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.01, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2456355942764922136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5465,7 +5451,7 @@ ParticleSystem:
     colliderQueryMode: 1
     radiusScale: 0.46
     primitives:
-    - {fileID: 1747324317661774328}
+    - {fileID: 6555029073831754362}
   SubModule:
     serializedVersion: 2
     enabled: 0

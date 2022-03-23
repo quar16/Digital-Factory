@@ -9,14 +9,30 @@ public class Door : MonoBehaviour
 
     Vector3 firstVector;
 
-    bool open = false;
-    public bool isOpen
+    public bool Closed
     {
         get
         {
-            return open;
+            return door.localEulerAngles.y == 0;
         }
     }
+
+    public bool Opened
+    {
+        get
+        {
+            return door.localEulerAngles.y >= 60;
+        }
+    }
+
+    public bool FullOpened
+    {
+        get
+        {
+            return door.localEulerAngles.y >= 90;
+        }
+    }
+
     float startAngle = 0;
 
     public bool isAxisX = false;
@@ -54,22 +70,13 @@ public class Door : MonoBehaviour
 
             float angle = startAngle + Vector3.SignedAngle(firstVector, doorNowVector, door.up);
             door.localEulerAngles = new Vector3(0, Mathf.Clamp(angle, 0, doorMax), 0);
-
-            if (door.localEulerAngles.y > 90)
-                open = true;
         }
     }
     public void DoorOff()
     {
         if (door.localEulerAngles.y > doorMax - 10)
-        {
-            open = true;
             door.localEulerAngles = new Vector3(0, doorMax, 0);
-        }
         else if (door.localEulerAngles.y < 5)
-        {
-            open = false;
             door.localEulerAngles = new Vector3(0, 0, 0);
-        }
     }
 }

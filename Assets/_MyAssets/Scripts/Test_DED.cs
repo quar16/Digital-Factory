@@ -29,7 +29,7 @@ public class Test_DED : TestClass
     {
         float startTime = Time.time;
 
-        yield return TestStep("메인 도어 열기", () => mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 열기", () => mainDoor.Opened, mainDoor.trigger);
 
         yield return TestStep("원재료 투입구 열기", () => !capClosed, capTrg);
 
@@ -44,7 +44,7 @@ public class Test_DED : TestClass
 
         yield return TestStep("지그 설치 하기", () => jigDone, jigTrg, jigPlace);
 
-        yield return TestStep("메인 도어 닫기", () => !mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainDoor.Closed, mainDoor.trigger);
 
         result.SetActive(true);
 
@@ -55,11 +55,11 @@ public class Test_DED : TestClass
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
 
-        yield return TestStep("제작 완료\n 메인 도어 열기", () => mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("제작 완료\n 메인 도어 열기", () => mainDoor.Opened, mainDoor.trigger);
 
         yield return TestStep("생산품 꺼내기", () => cart.CheckEvent(Layer.DOWN, State.ENTER, jig), jigTrg, cart.downHighLight);
 
-        yield return TestStep("메인 도어 닫기", () => !mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainDoor.Closed, mainDoor.trigger);
 
         testData.time3 = Time.time - startTime;
 

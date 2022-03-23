@@ -34,11 +34,11 @@ public class Test_SLS : TestClass
     {
         float startTime = Time.time;
 
-        yield return TestStep("메인 도어 열기", () => mainLeftDoor.isOpen && mainRightDoor.isOpen, mainLeftDoor.trigger, mainRightDoor.trigger);
+        yield return TestStep("메인 도어 열기", () => mainLeftDoor.FullOpened && mainRightDoor.FullOpened, mainLeftDoor.trigger, mainRightDoor.trigger);
 
-        yield return TestStep("컨테이너 스테이션 상부 도어 열기", () => productUpDoor.isOpen, productUpDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 상부 도어 열기", () => productUpDoor.FullOpened, productUpDoor.trigger);
 
-        yield return TestStep("컨테이너 스테이션 하부 도어 열기", () => productLeftDoor.isOpen && productRightDoor.isOpen, productLeftDoor.trigger, productRightDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 하부 도어 열기", () => productLeftDoor.FullOpened && productRightDoor.FullOpened, productLeftDoor.trigger, productRightDoor.trigger);
 
         yield return TestStep("리프트 높이 낮추기", () => leverIndex == 0, liftLeverTrg);
 
@@ -47,14 +47,16 @@ public class Test_SLS : TestClass
         carryChangeCoolTime = false;
         yield return TestStep("컨테이너 들기", () => containerPosIndex == 1, stationContainerPos);
 
-        yield return TestStep("리프트 이동 및 리프트 높이 조절", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.1f && leverIndex == 1, liftLeverTrg, liftMovePos);
+        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.5f, liftMovePos);
+
+        yield return TestStep("리프트 높이 조절", () => leverIndex == 1, liftLeverTrg);
 
         carryChangeCoolTime = false;
         yield return TestStep("컨테이너 삽입", () => containerPosIndex == 2, mainContainerPos);
 
-        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.1f, liftMovePos);
+        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.5f, liftMovePos);
 
-        yield return TestStep("메인 도어 닫기", () => !mainLeftDoor.isOpen && !mainRightDoor.isOpen, mainLeftDoor.trigger, mainRightDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainLeftDoor.Closed && mainRightDoor.Closed, mainLeftDoor.trigger, mainRightDoor.trigger);
 
         testData.time1 = Time.time - startTime;
         startTime = Time.time;
@@ -65,25 +67,25 @@ public class Test_SLS : TestClass
         
         supply.SetActive(true);
 
-        yield return TestStep("제작 완료\n메인 도어 열기", () => mainLeftDoor.isOpen && mainRightDoor.isOpen, mainLeftDoor.trigger, mainRightDoor.trigger);
+        yield return TestStep("제작 완료\n메인 도어 열기", () => mainLeftDoor.FullOpened && mainRightDoor.FullOpened, mainLeftDoor.trigger, mainRightDoor.trigger);
 
         carryChangeCoolTime = false;
         yield return TestStep("컨테이너 꺼내기", () => containerPosIndex == 1, mainContainerPos);
 
-        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.1f, liftMovePos);
+        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.5f, liftMovePos);
 
         yield return TestStep("리프트 높이 낮추기", () => leverIndex == 0, liftLeverTrg);
 
         carryChangeCoolTime = false;
         yield return TestStep("컨테이너 내리기", () => containerPosIndex == 0, stationContainerPos);
 
-        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.1f, liftMovePos);
+        yield return TestStep("리프트 이동", () => Vector3.Distance(lift.position, liftMovePos.position) < 0.5f, liftMovePos);
 
-        yield return TestStep("컨테이너 스테이션 하부 도어 닫기", () => !productLeftDoor.isOpen && !productRightDoor.isOpen, productLeftDoor.trigger, productRightDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 하부 도어 닫기", () => productLeftDoor.Closed && productRightDoor.Closed, productLeftDoor.trigger, productRightDoor.trigger);
 
-        yield return TestStep("컨테이너 스테이션 상부 도어 닫기", () => !productUpDoor.isOpen, productUpDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 상부 도어 닫기", () => productUpDoor.Closed, productUpDoor.trigger);
 
-        yield return TestStep("메인 도어 닫기", () => !mainLeftDoor.isOpen && !mainRightDoor.isOpen, mainLeftDoor.trigger, mainRightDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainLeftDoor.Closed && mainRightDoor.Closed, mainLeftDoor.trigger, mainRightDoor.trigger);
 
         testData.time2 = Time.time - startTime;
 
@@ -229,7 +231,7 @@ public class Test_SLS : TestClass
 
             liftLever.localEulerAngles -= new Vector3(0, 0, angle);
 
-            float height = Mathf.Clamp(liftHand.localPosition.y + angle * 0.001f, 0.218f, 0.390f);
+            float height = Mathf.Clamp(liftHand.localPosition.y + angle * 0.0003f, 0.218f, 0.390f);
             liftHand.localPosition = new Vector3(0, height, 0);
             if (height < 0.221f)
                 leverIndex = 0;

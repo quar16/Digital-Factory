@@ -37,6 +37,8 @@ public class RecordReplayer : MonoBehaviour
     bool lastRClick;
     public void SetRecord(string ID, TestName testName)
     {
+        CSV.dataPath = Application.dataPath;
+
         try
         {
             data = CSV.Read("_MyAssets/CSV/" + ID + "/" + testName.ToString());

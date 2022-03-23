@@ -27,7 +27,7 @@ public class Test_PBF : TestClass
     {
         float startTime = Time.time;
 
-        yield return TestStep("메인 도어 열기", () => mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 열기", () => mainDoor.FullOpened, mainDoor.trigger);
 
         targetLiftLevel = 0;
         yield return TestStep("리프트 높이 조절", () => nowLiftLevel == targetLiftLevel, liftLeverTrigger);
@@ -63,9 +63,9 @@ public class Test_PBF : TestClass
         carryChangeCoolTime = false;
         yield return TestStep("생산품 컨테이너 삽입", () => !carryingProductContainer, highLightArea[2]);
 
-        yield return TestStep("리프트 뒤로 이동", () => Vector3.Distance(lift.transform.position, highLightArea[1].position) < 0.1f, highLightArea[1]);
+        yield return TestStep("리프트 뒤로 이동", () => Vector3.Distance(lift.transform.position, highLightArea[1].position) < 0.5f, highLightArea[1]);
 
-        yield return TestStep("메인 도어 닫기", () => !mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainDoor.Closed, mainDoor.trigger);
 
         testData.time2 = Time.time - startTime;
         startTime = Time.time;
@@ -74,7 +74,7 @@ public class Test_PBF : TestClass
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
 
-        yield return TestStep("제작 완료\n메인 도어 열기", () => mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("제작 완료\n메인 도어 열기", () => mainDoor.FullOpened, mainDoor.trigger);
 
         carryChangeCoolTime = false;
         yield return TestStep("생산품 컨테이너 들기", () => carryingProductContainer, highLightArea[2]);
@@ -89,12 +89,12 @@ public class Test_PBF : TestClass
         yield return TestStep("리프트 높이 조절", () => nowLiftLevel == targetLiftLevel, liftLeverTrigger);
         liftFixed = false;
 
-        yield return TestStep("지정 위치로 리프트 이동", () => Vector3.Distance(lift.transform.position, highLightArea[1].position) < 0.1f, highLightArea[1]);
+        yield return TestStep("지정 위치로 리프트 이동", () => Vector3.Distance(lift.transform.position, highLightArea[1].position) < 0.5f, highLightArea[1]);
         liftFixed = true;
 
         yield return TestStep("생산품 스테이션 닫기", () => !productDoorOpen, productDoorLeftTrg, productDoorRightTrg);
 
-        yield return TestStep("메인 도어 닫기", () => !mainDoor.isOpen, mainDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => mainDoor.Closed, mainDoor.trigger);
 
         testData.time3 = Time.time - startTime;
 
@@ -217,7 +217,7 @@ public class Test_PBF : TestClass
 
             if (!carryChangeCoolTime)
             {
-                if (Vector3.Distance(carryPoint[nowLiftLevel], lift.localPosition) < 0.05f)
+                if (Vector3.Distance(carryPoint[nowLiftLevel], lift.localPosition) < 0.5f)
                 {
                     switch (nowLiftLevel)
                     {
@@ -229,11 +229,11 @@ public class Test_PBF : TestClass
                                 CarryChange1();
                             break;
                         case 2:
-                            if (mainDoor.isOpen)
+                            if (mainDoor.FullOpened)
                                 CarryChange2();
                             break;
                         case 3:
-                            if (mainDoor.isOpen)
+                            if (mainDoor.FullOpened)
                                 CarryChange3();
                             break;
                     }

@@ -1,3 +1,4 @@
+using EPOOutline;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class AssemblePart : VR_Trigger
 {
     Rigidbody rigid;
     Transform parent;
-    Outline outline;
+    Outlinable outline;
 
     public Transform combineTarget;
 
@@ -26,7 +27,7 @@ public class AssemblePart : VR_Trigger
         ClickEvent.AddListener(() => { OnClick(); });
         rigid = GetComponent<Rigidbody>();
         parent = transform.parent;
-        outline = GetComponent<Outline>();
+        outline = GetComponent<Outlinable>();
     }
 
     public void OnClick()
@@ -107,7 +108,7 @@ public class AssemblePart : VR_Trigger
             }
         }
         float t = combineTime / 5f;
-        outline.OutlineColor = new Color(t, 1 - t, 0);
+        outline.FrontParameters.Color = new Color(t, 1 - t, 0);
     }
 
     float combineTime = 0;

@@ -1,18 +1,19 @@
+using EPOOutline;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Test_Assembly : TestClass
 {
-    public Outline ol_SideMirror1;
-    public Outline ol_SideMirror2;
-    public Outline ol_Seat1;
-    public Outline ol_Seat2;
-    public Outline ol_Seat3;
-    public Outline ol_Seat4;
-    public Outline ol_B_Pillar1;
-    public Outline ol_B_Pillar2;
-    public Outline ol_B_Pillar3;
+    public Outlinable ol_SideMirror1;
+    public Outlinable ol_SideMirror2;
+    public Outlinable ol_Seat1;
+    public Outlinable ol_Seat2;
+    public Outlinable ol_Seat3;
+    public Outlinable ol_Seat4;
+    public Outlinable ol_B_Pillar1;
+    public Outlinable ol_B_Pillar2;
+    public Outlinable ol_B_Pillar3;
 
     public AssemblePart ap_SideMirror1;
     public AssemblePart ap_Seat1;
@@ -23,56 +24,76 @@ public class Test_Assembly : TestClass
 
     public Transform[] samples;
 
+    public GameObject desk1;
+    public GameObject desk2;
+    public GameObject desk3;
+
     public override IEnumerator testContent()
     {
+        desk1.SetActive(true);
+        desk2.SetActive(false);
+        desk3.SetActive(false);
+
         float startTime = Time.time;
 
-        ol_SideMirror1.OutlineWidth = 3;
-        ol_SideMirror2.OutlineWidth = 3;
+        ol_SideMirror1.enabled = true;
+        ol_SideMirror2.enabled = true;
 
         yield return TestStep("사이드 미러 조립 - 1", () => ap_SideMirror1.isCombine);
 
         testData.time1 = Time.time - startTime;
         startTime = Time.time;
 
-        ol_SideMirror1.OutlineWidth = 0;
-        ol_SideMirror2.OutlineWidth = 0;
+        ol_SideMirror1.enabled = false;
+        ol_SideMirror2.enabled = false;
 
-        ol_Seat1.OutlineWidth = 3;
-        ol_Seat2.OutlineWidth = 3;
+        yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
+        desk1.SetActive(false);
+        desk2.SetActive(true);
+        desk3.SetActive(false);
+        yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
+
+        ol_Seat1.enabled = true;
+        ol_Seat2.enabled = true;
 
         yield return TestStep("시트 조립 - 1", () => ap_Seat1.isCombine);
 
-        ol_Seat2.OutlineWidth = 0;
-        ol_Seat3.OutlineWidth = 3;
+        ol_Seat2.enabled = false;
+        ol_Seat3.enabled = true;
 
         yield return TestStep("시트 조립 - 2", () => ap_Seat2.isCombine);
 
-        ol_Seat3.OutlineWidth = 0;
-        ol_Seat4.OutlineWidth = 3;
+        ol_Seat3.enabled = false;
+        ol_Seat4.enabled = true;
 
         yield return TestStep("시트 조립 - 3", () => ap_Seat3.isCombine);
 
         testData.time2 = Time.time - startTime;
         startTime = Time.time;
 
-        ol_Seat1.OutlineWidth = 0;
-        ol_Seat4.OutlineWidth = 0;
+        ol_Seat1.enabled = false;
+        ol_Seat4.enabled = false;
 
-        ol_B_Pillar1.OutlineWidth = 3;
-        ol_B_Pillar2.OutlineWidth = 3;
+        yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
+        desk1.SetActive(false);
+        desk2.SetActive(false);
+        desk3.SetActive(true);
+        yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
+        
+        ol_B_Pillar1.enabled = true;
+        ol_B_Pillar2.enabled = true;
 
         yield return TestStep("B 필러 조립 - 1", () => ap_B_Pillar1.isCombine);
 
-        ol_B_Pillar1.OutlineWidth = 0;
-        ol_B_Pillar3.OutlineWidth = 3;
+        ol_B_Pillar1.enabled = false;
+        ol_B_Pillar3.enabled = true;
 
         yield return TestStep("B 필러 조립 - 2", () => ap_B_Pillar2.isCombine);
 
         testData.time3 = Time.time - startTime;
 
-        ol_B_Pillar2.OutlineWidth = 0;
-        ol_B_Pillar3.OutlineWidth = 0;
+        ol_B_Pillar2.enabled = false;
+        ol_B_Pillar3.enabled = false;
 
         VRUI.Instance.ChangeIndicate("모든 공정 완료");
         yield return new WaitForSeconds(3);

@@ -24,7 +24,7 @@ public class DataManager
         string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
         string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
 
-        var _TestDataDictionary = TestDataDictionary;
+        var _TestDataDictionary = new Dictionary<TestName, TestData>(TestDataDictionary);
 
         TestName testName = TestName.DED;
 
@@ -36,13 +36,13 @@ public class DataManager
 
             for (int i = 0; i < 6; i++)
             {
-                if (TestDataDictionary.ContainsKey(testName))
+                if (_TestDataDictionary.ContainsKey(testName))
                     SingleTestWrite(testName);
                 testName++;
             }
+            Debug.Log(ID + " Save Done");
         });
         _saveDataThread.Start();
-        Debug.Log(ID + " Save Done");
 
 
         void SingleTestWrite(TestName testName)

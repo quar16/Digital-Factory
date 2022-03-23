@@ -37,7 +37,7 @@ public class Test_SLA : TestClass
     {
         float startTime = Time.time;
 
-        yield return TestStep("메인 도어 열기", () => upLeftDoor.isOpen && upRightDoor.isOpen, upLeftDoor.trigger, upRightDoor.trigger);
+        yield return TestStep("메인 도어 열기", () => upLeftDoor.Opened && upRightDoor.Opened, upLeftDoor.trigger, upRightDoor.trigger);
 
         yield return TestStep("레진 통 들기", () => bottleLose != 0, bottleTrg);
 
@@ -45,7 +45,7 @@ public class Test_SLA : TestClass
 
         yield return TestStep("레진 통 내려놓기", () => bottleLose == 0, bottleTrg);
 
-        yield return TestStep("메인 도어 닫기", () => !upLeftDoor.isOpen && !upRightDoor.isOpen, upLeftDoor.trigger, upRightDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => upLeftDoor.Closed && upRightDoor.Closed, upLeftDoor.trigger, upRightDoor.trigger);
 
         product.gameObject.SetActive(true);
 
@@ -56,16 +56,16 @@ public class Test_SLA : TestClass
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
 
-        yield return TestStep("제작 완료\n메인 도어 열기", () => upLeftDoor.isOpen && upRightDoor.isOpen, upLeftDoor.trigger, upRightDoor.trigger);
+        yield return TestStep("제작 완료\n메인 도어 열기", () => upLeftDoor.Opened && upRightDoor.Opened, upLeftDoor.trigger, upRightDoor.trigger);
 
         yield return TestStep("생산품 카트로 이동", () => cart.CheckEvent(Layer.UP, State.ENTER, product), productTrg, cart.upHighLight);
 
-        yield return TestStep("메인 도어 닫기", () => !upLeftDoor.isOpen && !upRightDoor.isOpen, upLeftDoor.trigger, upRightDoor.trigger);
+        yield return TestStep("메인 도어 닫기", () => upLeftDoor.Closed && upRightDoor.Closed, upLeftDoor.trigger, upRightDoor.trigger);
 
         testData.time2 = Time.time - startTime;
         startTime = Time.time;
 
-        yield return TestStep("하단의 서브 도어 열기", () => downDoor.isOpen, downDoor.trigger);
+        yield return TestStep("하단의 서브 도어 열기", () => downDoor.FullOpened, downDoor.trigger);
 
         yield return TestStep("호스를 관에 연결", () => hoseDone, hoseTrg, hoseHighLightArea);
 
@@ -83,7 +83,7 @@ public class Test_SLA : TestClass
 
         yield return TestStep("레진 통 카트로 이동", () => cart.CheckEvent(Layer.DOWN, State.ENTER, bottle), bottleTrg, cart.downHighLight);
 
-        yield return TestStep("서브 도어 닫기", () => !downDoor.isOpen, downDoor.trigger);
+        yield return TestStep("서브 도어 닫기", () => downDoor.Closed, downDoor.trigger);
 
         testData.time3 = Time.time - startTime;
 

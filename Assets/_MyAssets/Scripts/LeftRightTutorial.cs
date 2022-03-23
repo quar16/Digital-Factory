@@ -26,14 +26,17 @@ public class LeftRightTutorial : MonoBehaviour
         {
             FlowManager.FlowMessage = "LeftRightTutorialDone";
             indicdator.parent = leftController;
+            indicdator.transform.localPosition = Vector3.zero;
+            indicdator.transform.localEulerAngles = Vector3.zero;
+            gameObject.SetActive(false);
         }
         else if (rightDone)
         {
             FlowManager.FlowMessage = "LeftRightTutorialDone";
             indicdator.parent = rightController;
+            indicdator.transform.localPosition = Vector3.zero;
+            indicdator.transform.localEulerAngles = Vector3.zero;
+            gameObject.SetActive(false);
         }
-        indicdator.transform.localPosition = Vector3.zero;
-        indicdator.transform.localEulerAngles = Vector3.zero;
-        gameObject.SetActive(false);
     }
 }
