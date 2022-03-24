@@ -208,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642625664885005236}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.289, z: -0.265}
+  m_LocalPosition: {x: -0.239, y: 0.206, z: 0.148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5415039526801658749}
@@ -428,6 +428,7 @@ MonoBehaviour:
   hoseHighLightArea: {fileID: 5376476162716135826}
   bottleHighLightArea: {fileID: 4760314981637550320}
   supply: {fileID: 8486436690015979770}
+  bottleCollider: {fileID: 6618768703468389484}
   cart: {fileID: 1588982814558928975}
 --- !u!1 &3567703718766368102
 GameObject:
@@ -730,7 +731,6 @@ GameObject:
   - component: {fileID: 8276382691882083170}
   - component: {fileID: 3011948605079035951}
   - component: {fileID: 3026232777408489988}
-  - component: {fileID: 8983352992631286358}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -801,19 +801,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8983352992631286358
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4274372813929041547}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4765829310585839448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,14 +1188,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6559344080815433071}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.452, y: 0.708, z: 0.121}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7052389732848763320}
   m_Father: {fileID: 8261805513591390035}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &6618768703468389484
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1294,7 +1281,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6561040977459489138}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.01, z: 1}
@@ -6540,8 +6527,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8785402452972807657}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.843, y: 0, z: 2.117}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.969, y: 0, z: 3.289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3588231247648817341}
@@ -6552,7 +6539,7 @@ Transform:
   - {fileID: 7008976216478701240}
   m_Father: {fileID: 3886516362983161753}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &4974243115385057526
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6860,7 +6847,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -7044,6 +7031,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1771120451332474129}
     m_Modifications:
+    - target: {fileID: 4644560406861166337, guid: 7f5a1afc537b0fc4da1aa7f7c0cb43c0, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5782595299873803374, guid: 7f5a1afc537b0fc4da1aa7f7c0cb43c0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7425,6 +7416,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 80329656120605275}
     m_Modifications:
+    - target: {fileID: 4650878466175647967, guid: 0e949d50e2a5d614d81746f5ad7bbecc, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5818670022191889328, guid: 0e949d50e2a5d614d81746f5ad7bbecc, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -7604,6 +7599,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9139558045075526551}
     m_Modifications:
+    - target: {fileID: 3189497095471916489, guid: 5e13b38163657e147affe7ab20d696a2, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3982205465153094684, guid: 5e13b38163657e147affe7ab20d696a2, type: 3}
       propertyPath: m_Name
       value: Fbx_CarSeat_Cushion_Back

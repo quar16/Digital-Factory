@@ -105,6 +105,7 @@
      <Compile Include="Assets\EasyColliderEditor\Scripts\EasyColliderPreviewer.cs" />
      <Compile Include="Assets\EasyColliderEditor\Scripts\EasyColliderCreator.cs" />
      <Compile Include="Assets\EasyColliderEditor\Scripts\Shader\EasyColliderCompute.cs" />
+     <Compile Include="Assets\_MyAssets\Scripts\JsonSave.cs" />
      <None Include="Assets\EasyColliderEditor\Scripts\Shader\EasyColliderShader.shader" />
      <None Include="Assets\EasyColliderEditor\Scripts\Plugins\VHACDLicense.txt" />
      <None Include="Assets\EasyColliderEditor\ThirdPartyNotices.txt" />

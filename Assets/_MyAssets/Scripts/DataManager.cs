@@ -19,86 +19,42 @@ public class DataManager
 
     public static Dictionary<TestName, TestData> TestDataDictionary;
 
-    public static void ThreadSaveData()
+    public static void SaveData()
     {
-        var _TestDataDictionary = new Dictionary<TestName, TestData>(TestDataDictionary);
-        string _ID = ID;
+        AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
 
-        string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", _ID);
-        string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
+        TestSummaryWrite();
 
         TestName testName = TestName.DED;
 
-        CSV.dataPath = Application.dataPath;
-
-        Thread _saveDataThread = new Thread(() =>
+        for (int i = 0; i < 6; i++)
         {
-            TestSummaryWrite();
+            if (TestDataDictionary.ContainsKey(testName))
+                JsonSave.Save(ID, testName, TestDataDictionary[testName]);
+            testName++;
+        }
 
-            for (int i = 0; i < 6; i++)
-            {
-                if (_TestDataDictionary.ContainsKey(testName))
-                    SingleTestWrite(testName);
-                testName++;
-            }
-            Debug.Log(_ID + " Save Done");
-        });
-        _saveDataThread.Start();
+        Debug.Log(ID + " save Done");
+    }
 
+    public static void JsonToCSV()
+    {
+        string[] subFolders = AssetDatabase.GetSubFolders("Assets/_MyAssets/CSV");
 
-        void SingleTestWrite(TestName testName)
+        foreach (string subFolder in subFolders)
         {
-            TestData data = _TestDataDictionary[testName];
+            DirectoryInfo dir = new DirectoryInfo(subFolder);
+            FileInfo[] jsons = dir.GetFiles("*.json");
 
-            var lists = CSV.Read("_MyAssets/CSVFormat/SingleTestData");
+            string _ID = dir.Name;
 
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            string[] keys = new string[lists[0].Keys.Count];
-            lists[0].Keys.CopyTo(keys, 0);
-
-            foreach (string str in keys)
+            foreach (FileInfo j in jsons)
             {
-                dictionary.Add(str, "");
+                SingleTestWrite(JsonSave.Load(j.FullName), _ID, j.Name.Replace(".json", ""));
+                File.Delete(j.FullName);
+                File.Delete(j.FullName + ".meta");
             }
-
-            int count = data.leftClick.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                dictionary[keys[0]] = data.time[i];
-
-                dictionary[keys[1]] = data.HMDpos[i].x;
-                dictionary[keys[2]] = data.HMDpos[i].y;
-                dictionary[keys[3]] = data.HMDpos[i].z;
-
-                dictionary[keys[4]] = data.HMDrot[i].x;
-                dictionary[keys[5]] = data.HMDrot[i].y;
-                dictionary[keys[6]] = data.HMDrot[i].z;
-
-                dictionary[keys[7]] = data.leftPos[i].x;
-                dictionary[keys[8]] = data.leftPos[i].y;
-                dictionary[keys[9]] = data.leftPos[i].z;
-
-                dictionary[keys[10]] = data.leftRot[i].x;
-                dictionary[keys[11]] = data.leftRot[i].y;
-                dictionary[keys[12]] = data.leftRot[i].z;
-
-                dictionary[keys[13]] = data.leftClick[i];
-
-                dictionary[keys[14]] = data.rightPos[i].x;
-                dictionary[keys[15]] = data.rightPos[i].y;
-                dictionary[keys[16]] = data.rightPos[i].z;
-
-                dictionary[keys[17]] = data.rightRot[i].x;
-                dictionary[keys[18]] = data.rightRot[i].y;
-                dictionary[keys[19]] = data.rightRot[i].z;
-
-                dictionary[keys[20]] = data.rightClick[i];
-
-                lists.Add(new Dictionary<string, object>(dictionary));
-            }
-
-            CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + testName.ToString());
+            Debug.Log(_ID + " convert Done");
         }
     }
 
@@ -197,9 +153,8 @@ public class DataManager
         CSV.Write(lists, "_MyAssets/CSV/" + ID + "/TestSummary");
     }
 
-    static void SingleTestWrite(TestName testName)
+    static void SingleTestWrite(TestData data, string _ID, string testName)
     {
-        TestData data = TestDataDictionary[testName];
 
         var lists = CSV.Read("_MyAssets/CSVFormat/SingleTestData");
 
@@ -249,7 +204,7 @@ public class DataManager
             lists.Add(new Dictionary<string, object>(dictionary));
         }
 
-        CSV.Write(lists, "_MyAssets/CSV/" + ID + "/" + testName.ToString());
+        CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + testName);
     }
 }
 
@@ -286,3 +241,91 @@ public struct TestData
     }
 }
 #endregion
+
+
+/*
+    public static void ThreadSaveData()
+    {
+        var _TestDataDictionary = new Dictionary<TestName, TestData>(TestDataDictionary);
+        string _ID = ID;
+
+        string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", _ID);
+        string newFolderPath = AssetDatabase.GUIDToAssetPath(guid);
+
+        TestName testName = TestName.DED;
+
+        CSV.dataPath = Application.dataPath;
+
+        Thread _saveDataThread = new Thread(() =>
+        {
+            TestSummaryWrite();
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (_TestDataDictionary.ContainsKey(testName))
+                    SingleTestWrite(testName);
+                testName++;
+            }
+            Debug.Log(_ID + " Save Done");
+        });
+        _saveDataThread.Start();
+
+
+        void SingleTestWrite(TestName testName)
+        {
+            TestData data = _TestDataDictionary[testName];
+
+            var lists = CSV.Read("_MyAssets/CSVFormat/SingleTestData");
+
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            string[] keys = new string[lists[0].Keys.Count];
+            lists[0].Keys.CopyTo(keys, 0);
+
+            foreach (string str in keys)
+            {
+                dictionary.Add(str, "");
+            }
+
+            int count = data.leftClick.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[keys[0]] = data.time[i];
+
+                dictionary[keys[1]] = data.HMDpos[i].x;
+                dictionary[keys[2]] = data.HMDpos[i].y;
+                dictionary[keys[3]] = data.HMDpos[i].z;
+
+                dictionary[keys[4]] = data.HMDrot[i].x;
+                dictionary[keys[5]] = data.HMDrot[i].y;
+                dictionary[keys[6]] = data.HMDrot[i].z;
+
+                dictionary[keys[7]] = data.leftPos[i].x;
+                dictionary[keys[8]] = data.leftPos[i].y;
+                dictionary[keys[9]] = data.leftPos[i].z;
+
+                dictionary[keys[10]] = data.leftRot[i].x;
+                dictionary[keys[11]] = data.leftRot[i].y;
+                dictionary[keys[12]] = data.leftRot[i].z;
+
+                dictionary[keys[13]] = data.leftClick[i];
+
+                dictionary[keys[14]] = data.rightPos[i].x;
+                dictionary[keys[15]] = data.rightPos[i].y;
+                dictionary[keys[16]] = data.rightPos[i].z;
+
+                dictionary[keys[17]] = data.rightRot[i].x;
+                dictionary[keys[18]] = data.rightRot[i].y;
+                dictionary[keys[19]] = data.rightRot[i].z;
+
+                dictionary[keys[20]] = data.rightClick[i];
+
+                lists.Add(new Dictionary<string, object>(dictionary));
+            }
+
+            CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + testName.ToString());
+        }
+    }
+ 
+ 
+ */

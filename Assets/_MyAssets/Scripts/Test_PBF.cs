@@ -334,7 +334,7 @@ public class Test_PBF : TestClass
 
     float[] LeverLevel = { 0.6277f, 1.114f, 1.942f, 1.2435f };//supply,product,m1,m2 
     Vector3[] carryPoint = {
-        new Vector3(-0.569f, 0, 1.626f),
+        new Vector3(-0.468f, 0, 2.547f),
         new Vector3(2.941f, 0, 1.194f),
         new Vector3(0.126f, 0, -0.116f),
         new Vector3(0.126f, 0, -0.116f)};

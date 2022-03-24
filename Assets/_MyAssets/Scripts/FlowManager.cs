@@ -110,7 +110,7 @@ public class FlowManager : MonoSingleton<FlowManager>
 
     public void TestEnd()
     {
-        DataManager.ThreadSaveData();
+        DataManager.SaveData();
         SceneLoader.Instance.SceneLoad(SCENE.MAIN);
     }
 

@@ -31,6 +31,8 @@ public class Test_SLA : TestClass
 
     public BottleParticle supply;
 
+    public Collider bottleCollider;
+
     public Cart cart;
 
     public override IEnumerator testContent()
@@ -103,6 +105,7 @@ public class Test_SLA : TestClass
         bottleFirstPos = bottle.transform.position;
 
         bottleRig.constraints = RigidbodyConstraints.FreezeAll;
+        bottleCollider.isTrigger = true;
     }
 
     //bool bottleDone = false;
@@ -144,6 +147,7 @@ public class Test_SLA : TestClass
             yield return new WaitForFixedUpdate();
         }
         bottleRig.constraints = RigidbodyConstraints.None;
+        bottleCollider.isTrigger = false;
     }
 
     int bottleLose = 0;
@@ -163,7 +167,7 @@ public class Test_SLA : TestClass
 
         float angle = Vector3.SignedAngle(bottleFirstRot, bottleNowRot, -bottle.right);
         angle = Mathf.Abs(angle);
-        bottle.localEulerAngles = new Vector3(0, 180, Mathf.Clamp(angle, 0, 179f));
+        bottle.localEulerAngles = new Vector3(0, 90, Mathf.Clamp(angle, 0, 179f));
     }
     public void BottleAngleOff()
     {
@@ -173,10 +177,10 @@ public class Test_SLA : TestClass
     {
         while (bottle.localEulerAngles.z > 1f)
         {
-            bottle.localEulerAngles = new Vector3(0, 180, bottle.localEulerAngles.z * 0.9f);
+            bottle.localEulerAngles = new Vector3(0, 90, bottle.localEulerAngles.z * 0.9f);
             yield return null;
         }
-        bottle.localEulerAngles = new Vector3(0, 180, 0);
+        bottle.localEulerAngles = new Vector3(0, 90, 0);
     }
 
     public void HoseClick()

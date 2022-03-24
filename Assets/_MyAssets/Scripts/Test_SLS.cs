@@ -8,12 +8,12 @@ public class Test_SLS : TestClass
     public VR_Trigger liftLeverTrg;
     public VR_Trigger liftLeftTrg;
     public VR_Trigger liftRightTrg;
+    public VR_Trigger productUpDoorTrg;
 
     public Door mainLeftDoor;
     public Door mainRightDoor;
     public Door productLeftDoor;
     public Door productRightDoor;
-    public Door productUpDoor;
 
     public Transform SLS_Main;
 
@@ -21,6 +21,7 @@ public class Test_SLS : TestClass
     public Transform liftHand;
     public Transform liftLever;
     public Transform productContainer;
+    public Transform productUpDoor;
 
     public GameObject supply;
 
@@ -36,7 +37,7 @@ public class Test_SLS : TestClass
 
         yield return TestStep("메인 도어 열기", () => mainLeftDoor.FullOpened && mainRightDoor.FullOpened, mainLeftDoor.trigger, mainRightDoor.trigger);
 
-        yield return TestStep("컨테이너 스테이션 상부 도어 열기", () => productUpDoor.FullOpened, productUpDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 상부 도어 열기", () => upDoorOpened, productUpDoorTrg);
 
         yield return TestStep("컨테이너 스테이션 하부 도어 열기", () => productLeftDoor.FullOpened && productRightDoor.FullOpened, productLeftDoor.trigger, productRightDoor.trigger);
 
@@ -64,7 +65,7 @@ public class Test_SLS : TestClass
         yield return SceneLoader.Instance.SceneChangeEffectShowing(true);
         yield return new WaitForSeconds(1);
         yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
-        
+
         supply.SetActive(true);
 
         yield return TestStep("제작 완료\n메인 도어 열기", () => mainLeftDoor.FullOpened && mainRightDoor.FullOpened, mainLeftDoor.trigger, mainRightDoor.trigger);
@@ -83,7 +84,7 @@ public class Test_SLS : TestClass
 
         yield return TestStep("컨테이너 스테이션 하부 도어 닫기", () => productLeftDoor.Closed && productRightDoor.Closed, productLeftDoor.trigger, productRightDoor.trigger);
 
-        yield return TestStep("컨테이너 스테이션 상부 도어 닫기", () => productUpDoor.Closed, productUpDoor.trigger);
+        yield return TestStep("컨테이너 스테이션 상부 도어 닫기", () => !upDoorOpened, productUpDoorTrg);
 
         yield return TestStep("메인 도어 닫기", () => mainLeftDoor.Closed && mainRightDoor.Closed, mainLeftDoor.trigger, mainRightDoor.trigger);
 
@@ -246,6 +247,38 @@ public class Test_SLS : TestClass
     public void LiftLeverOff()
     {
 
+    }
+
+    bool upDoorMoving = false;
+    bool upDoorOpened = false;
+    public void ProductUpDoorClick()
+    {
+        if (upDoorMoving)
+            return;
+        upDoorMoving = true;
+
+        StartCoroutine(CapChange());
+    }
+    IEnumerator CapChange()
+    {
+        upDoorMoving = true;
+
+        for (int i = 0; i < 90; i++)
+        {
+            if (upDoorOpened)
+                productUpDoor.localEulerAngles = new Vector3(0, 110 - i / 90f * 110, 0);
+            else
+                productUpDoor.localEulerAngles = new Vector3(0, i / 90f * 110, 0);
+            yield return null;
+        }
+
+        if (upDoorOpened)
+            productUpDoor.localEulerAngles = new Vector3(0, 0, 0);
+        else
+            productUpDoor.localEulerAngles = new Vector3(0, 110, 0);
+
+        upDoorOpened = !upDoorOpened;
+        upDoorMoving = false;
     }
 
     public override void Remove()
