@@ -41,11 +41,11 @@ public class Test_SLA : TestClass
 
         yield return TestStep("메인 도어 열기", () => upLeftDoor.Opened && upRightDoor.Opened, upLeftDoor.trigger, upRightDoor.trigger);
 
-        yield return TestStep("레진 통 들기", () => bottleLose != 0, bottleTrg);
+        yield return TestStep("레진 통 들기", () => bottleHold, bottleTrg);
 
         yield return TestStep("메인 도어 내부에 레진 붓기", () => supply.done, bottleTrg, bottleAngleTrg, ResinArea);
 
-        yield return TestStep("레진 통 내려놓기", () => bottleLose == 0, bottleTrg);
+        yield return TestStep("레진 통 내려놓기", () => !bottleHold, bottleTrg);
 
         yield return TestStep("메인 도어 닫기", () => upLeftDoor.Closed && upRightDoor.Closed, upLeftDoor.trigger, upRightDoor.trigger);
 
@@ -96,10 +96,9 @@ public class Test_SLA : TestClass
 
     Vector3 bottleDetFirstPos;
     Vector3 bottleFirstPos;
+    bool bottleHold = false;
     public void BottleClick()
     {
-        bottleLose++;
-
         bottleDetFirstPos = bottleTrg.detector.transform.position;
 
         bottleFirstPos = bottle.transform.position;
@@ -112,28 +111,26 @@ public class Test_SLA : TestClass
     public void BottleHold()
     {
         bottle.transform.position = bottleFirstPos - bottleDetFirstPos + bottleTrg.detector.transform.position;
+        bottleHold = true;
     }
 
     public void BottleOff()
     {
-        bottleLose--;
+        bottleHold = false;
 
-        if (bottleLose == 0)
+        if (Vector3.Distance(bottle.position, bottlePlace.position) < 0.2f)
         {
-            if (Vector3.Distance(bottle.position, bottlePlace.position) < 0.2f)
-            {
-                bottle.parent = null;
-                bottle.position = bottlePlace.position;
-                bottle.localEulerAngles = new Vector3(0, 270, 0);
-                bottleDone = true;
-                return;
-            }
-
-            BottleAngleOff();
-            if (bottleAngleTrg.detector != null)
-                bottleAngleTrg.detector.LoseTarget();
-            StartCoroutine(DropOff());
+            bottle.parent = null;
+            bottle.position = bottlePlace.position;
+            bottle.localEulerAngles = new Vector3(0, 270, 0);
+            bottleDone = true;
+            return;
         }
+
+        BottleAngleOff();
+        if (bottleAngleTrg.detector != null)
+            bottleAngleTrg.detector.LoseTarget();
+        StartCoroutine(DropOff());
     }
 
     IEnumerator DropOff()
@@ -142,7 +139,7 @@ public class Test_SLA : TestClass
         while (delta < 0.1f)
         {
             delta += Time.deltaTime;
-            if (bottleLose != 0)
+            if (bottleHold)
                 yield break;
             yield return new WaitForFixedUpdate();
         }
@@ -150,7 +147,6 @@ public class Test_SLA : TestClass
         bottleCollider.isTrigger = false;
     }
 
-    int bottleLose = 0;
     bool bottleDone = false;
 
     Vector3 bottleFirstRot;

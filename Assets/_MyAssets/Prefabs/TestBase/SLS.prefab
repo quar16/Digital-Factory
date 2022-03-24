@@ -709,11 +709,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2763715796385647211, guid: 9a167a974e25576438fe634f3cd46ce5, type: 3}
       propertyPath: OffEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2763715796385647211, guid: 9a167a974e25576438fe634f3cd46ce5, type: 3}
       propertyPath: HoldEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2763715796385647211, guid: 9a167a974e25576438fe634f3cd46ce5, type: 3}
       propertyPath: ClickEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1775,7 +1775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5997992307436697775, guid: 76dd059068211d04eb9439069d2a2a07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 5997992307436697775, guid: 76dd059068211d04eb9439069d2a2a07, type: 3}
       propertyPath: m_LocalPosition.z

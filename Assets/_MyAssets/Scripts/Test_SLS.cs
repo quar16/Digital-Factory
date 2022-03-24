@@ -214,39 +214,36 @@ public class Test_SLS : TestClass
         liftRightHold = false;
     }
 
-    Vector3 leverNowPos;
-    Vector3 leverLastPos;
-    int leverIndex = -1;
+    int leverIndex = 1;
+    bool liftLeverMoving = false;
     public void LiftLeverClick()
     {
-        leverNowPos = liftLeverTrg.detector.transform.position;
-        leverLastPos = liftLeverTrg.detector.transform.position;
+        if (!liftLeverMoving)
+            StartCoroutine(LiftLeverChange());
     }
-    public void LiftLeverHold()
-    {
-        leverNowPos = liftLeverTrg.detector.transform.position;
 
-        if (Vector3.Distance(leverNowPos, liftLeverTrg.transform.position) < 0.1f)
+    IEnumerator LiftLeverChange()
+    {
+        liftLeverMoving = true;
+
+        for (int i = 0; i < 90; i++)
         {
-            float angle = Vector3.SignedAngle(leverNowPos - liftLever.position, leverLastPos - liftLever.position, liftLever.forward);
+            if (leverIndex == 0)
+            {
+                liftLever.localEulerAngles = new Vector3(0, 180, 360 * i / 90f);
+                liftHand.localPosition = new Vector3(0, Mathf.Lerp(0.218f, 0.390f, i / 90f), 0);
 
-            liftLever.localEulerAngles -= new Vector3(0, 0, angle);
-
-            float height = Mathf.Clamp(liftHand.localPosition.y + angle * 0.0003f, 0.218f, 0.390f);
-            liftHand.localPosition = new Vector3(0, height, 0);
-            if (height < 0.221f)
-                leverIndex = 0;
-            else if (0.385f < height)
-                leverIndex = 1;
+            }
             else
-                leverIndex = -1;
+            {
+                liftLever.localEulerAngles = new Vector3(0, 180, 360 - 360 * i / 90f);
+                liftHand.localPosition = new Vector3(0, Mathf.Lerp(0.218f, 0.390f, 1 - i / 90f), 0);
+            }
+            yield return null;
         }
+        leverIndex = 1 - leverIndex;
 
-        leverLastPos = liftLeverTrg.detector.transform.position;
-    }
-    public void LiftLeverOff()
-    {
-
+        liftLeverMoving = false;
     }
 
     bool upDoorMoving = false;
