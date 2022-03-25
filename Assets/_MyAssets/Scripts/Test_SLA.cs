@@ -110,13 +110,21 @@ public class Test_SLA : TestClass
     //bool bottleDone = false;
     public void BottleHold()
     {
-        bottle.transform.position = bottleFirstPos - bottleDetFirstPos + bottleTrg.detector.transform.position;
-        bottleHold = true;
+        if (bottleTrg.detector.clickTarget != null && bottleTrg.detector.clickTarget == bottleTrg)
+        {
+            bottle.transform.position = bottleFirstPos - bottleDetFirstPos + bottleTrg.detector.transform.position;
+            bottleHold = true;
+        }
+        else
+        {
+            BottleOff();
+        }
     }
 
     public void BottleOff()
     {
         bottleHold = false;
+        bottleTrg.detector.LoseTarget();
 
         if (Vector3.Distance(bottle.position, bottlePlace.position) < 0.2f)
         {
@@ -143,7 +151,7 @@ public class Test_SLA : TestClass
                 yield break;
             yield return new WaitForFixedUpdate();
         }
-        bottleRig.constraints = RigidbodyConstraints.None;
+        bottleRig.constraints = RigidbodyConstraints.FreezeRotation;
         bottleCollider.isTrigger = false;
     }
 

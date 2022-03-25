@@ -33,8 +33,8 @@ public class VR_Detector : MonoBehaviour
         }
     }
 
-    protected VR_Trigger clickTarget;
-    protected VR_Trigger holdTarget;
+    public VR_Trigger clickTarget;
+    public VR_Trigger holdTarget;
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<VR_Trigger>() != null)
