@@ -17,48 +17,40 @@ public class DataManager
     public static float avarageWalkSpeed;
     public static bool[] assemblySuccess = { true, true, true };
 
-    public static Dictionary<TestName, TestData> TestDataDictionary;
+    public static Dictionary<TestName, TestData> testDataDictionary;
+
+    public static List<TestData> sideMirrorTestList = new List<TestData>();
+    public static List<bool> sideMirrorSuccessed = new List<bool>();
+
+    static string savePath = "";
 
     public static void SaveData()
     {
-        AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
+        if (!AssetDatabase.IsValidFolder("Assets/_MyAssets/CSV/" + ID))
+            AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
 
-        TestSummaryWrite();
+        int count = 1;
+        while (AssetDatabase.IsValidFolder("Assets/_MyAssets/CSV/" + ID + "/" + count.ToString()))
+            count++;
+
+        AssetDatabase.CreateFolder("Assets/_MyAssets/CSV/" + ID, count.ToString());
+        savePath = "_MyAssets/CSV/" + ID + "/" + count.ToString() + "/";
+
+        TestSummaryWrite(count.ToString());
 
         TestName testName = TestName.DED;
 
         for (int i = 0; i < 6; i++)
         {
-            if (TestDataDictionary.ContainsKey(testName))
-                JsonSave.Save(ID, testName, TestDataDictionary[testName]);
+            if (testDataDictionary.ContainsKey(testName))
+                JsonSave.Save(ID, count.ToString(), testName.ToString(), testDataDictionary[testName]);
             testName++;
         }
 
-        Debug.Log(ID + " save Done");
+        AssetDatabase.Refresh();
     }
 
-    public static void JsonToCSV()
-    {
-        string[] subFolders = AssetDatabase.GetSubFolders("Assets/_MyAssets/CSV");
-
-        foreach (string subFolder in subFolders)
-        {
-            DirectoryInfo dir = new DirectoryInfo(subFolder);
-            FileInfo[] jsons = dir.GetFiles("*.json");
-
-            string _ID = dir.Name;
-
-            foreach (FileInfo j in jsons)
-            {
-                SingleTestWrite(JsonSave.Load(j.FullName), _ID, j.Name.Replace(".json", ""));
-                File.Delete(j.FullName);
-                File.Delete(j.FullName + ".meta");
-            }
-            Debug.Log(_ID + " convert Done");
-        }
-    }
-
-    static void TestSummaryWrite()
+    static void TestSummaryWrite(string group)
     {
         var lists = CSV.Read("_MyAssets/CSVFormat/AllTestData");
         Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -67,13 +59,17 @@ public class DataManager
 
         {
             dictionary[keys[0]] = ID;
-            dictionary[keys[1]] = avarageWalkSpeed;
+            
+            if (FlowManager.isTestRun[0])
+                dictionary[keys[1]] = avarageWalkSpeed;
+            else
+                dictionary[keys[1]] = "-";
 
-            if (TestDataDictionary.ContainsKey(TestName.DED))
+            if (testDataDictionary.ContainsKey(TestName.DED))
             {
-                dictionary[keys[2]] = TestDataDictionary[TestName.DED].time1;
-                dictionary[keys[3]] = TestDataDictionary[TestName.DED].time2;
-                dictionary[keys[4]] = TestDataDictionary[TestName.DED].time3;
+                dictionary[keys[2]] = testDataDictionary[TestName.DED].time1;
+                dictionary[keys[3]] = testDataDictionary[TestName.DED].time2;
+                dictionary[keys[4]] = testDataDictionary[TestName.DED].time3;
             }
             else
             {
@@ -82,11 +78,11 @@ public class DataManager
                 dictionary[keys[4]] = "-";
             }
 
-            if (TestDataDictionary.ContainsKey(TestName.PBF))
+            if (testDataDictionary.ContainsKey(TestName.PBF))
             {
-                dictionary[keys[5]] = TestDataDictionary[TestName.PBF].time1;
-                dictionary[keys[6]] = TestDataDictionary[TestName.PBF].time2;
-                dictionary[keys[7]] = TestDataDictionary[TestName.PBF].time3;
+                dictionary[keys[5]] = testDataDictionary[TestName.PBF].time1;
+                dictionary[keys[6]] = testDataDictionary[TestName.PBF].time2;
+                dictionary[keys[7]] = testDataDictionary[TestName.PBF].time3;
             }
             else
             {
@@ -94,11 +90,11 @@ public class DataManager
                 dictionary[keys[6]] = "-";
                 dictionary[keys[7]] = "-";
             }
-            if (TestDataDictionary.ContainsKey(TestName.FDM))
+            if (testDataDictionary.ContainsKey(TestName.FDM))
             {
-                dictionary[keys[08]] = TestDataDictionary[TestName.FDM].time1;
-                dictionary[keys[09]] = TestDataDictionary[TestName.FDM].time2;
-                dictionary[keys[10]] = TestDataDictionary[TestName.FDM].time3;
+                dictionary[keys[08]] = testDataDictionary[TestName.FDM].time1;
+                dictionary[keys[09]] = testDataDictionary[TestName.FDM].time2;
+                dictionary[keys[10]] = testDataDictionary[TestName.FDM].time3;
             }
             else
             {
@@ -106,11 +102,11 @@ public class DataManager
                 dictionary[keys[9]] = "-";
                 dictionary[keys[10]] = "-";
             }
-            if (TestDataDictionary.ContainsKey(TestName.SLA))
+            if (testDataDictionary.ContainsKey(TestName.SLA))
             {
-                dictionary[keys[11]] = TestDataDictionary[TestName.SLA].time1;
-                dictionary[keys[12]] = TestDataDictionary[TestName.SLA].time2;
-                dictionary[keys[13]] = TestDataDictionary[TestName.SLA].time3;
+                dictionary[keys[11]] = testDataDictionary[TestName.SLA].time1;
+                dictionary[keys[12]] = testDataDictionary[TestName.SLA].time2;
+                dictionary[keys[13]] = testDataDictionary[TestName.SLA].time3;
             }
             else
             {
@@ -118,21 +114,21 @@ public class DataManager
                 dictionary[keys[12]] = "-";
                 dictionary[keys[13]] = "-";
             }
-            if (TestDataDictionary.ContainsKey(TestName.SLS))
+            if (testDataDictionary.ContainsKey(TestName.SLS))
             {
-                dictionary[keys[14]] = TestDataDictionary[TestName.SLS].time1;
-                dictionary[keys[15]] = TestDataDictionary[TestName.SLS].time2;
+                dictionary[keys[14]] = testDataDictionary[TestName.SLS].time1;
+                dictionary[keys[15]] = testDataDictionary[TestName.SLS].time2;
             }
             else
             {
                 dictionary[keys[14]] = "-";
                 dictionary[keys[15]] = "-";
             }
-            if (TestDataDictionary.ContainsKey(TestName.ASSEMBLY))
+            if (testDataDictionary.ContainsKey(TestName.ASSEMBLY))
             {
-                dictionary[keys[16]] = TestDataDictionary[TestName.ASSEMBLY].time1;
-                dictionary[keys[17]] = TestDataDictionary[TestName.ASSEMBLY].time2;
-                dictionary[keys[18]] = TestDataDictionary[TestName.ASSEMBLY].time3;
+                dictionary[keys[16]] = testDataDictionary[TestName.ASSEMBLY].time1;
+                dictionary[keys[17]] = testDataDictionary[TestName.ASSEMBLY].time2;
+                dictionary[keys[18]] = testDataDictionary[TestName.ASSEMBLY].time3;
 
                 dictionary[keys[19]] = assemblySuccess[0];
                 dictionary[keys[20]] = assemblySuccess[1];
@@ -150,12 +146,78 @@ public class DataManager
             }
         } // dictionary set
         lists.Add(dictionary);
-        CSV.Write(lists, "_MyAssets/CSV/" + ID + "/TestSummary");
+        CSV.Write(lists, "_MyAssets/CSV/" + ID + "/" + group + "/TestSummary");
     }
 
-    static void SingleTestWrite(TestData data, string _ID, string testName)
-    {
 
+    static void SideMirrorSummaryWrite()
+    {
+        var lists = CSV.Read("_MyAssets/CSVFormat/SideMirrorTestData");
+        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+        string[] keys = new string[lists[0].Keys.Count];
+        lists[0].Keys.CopyTo(keys, 0);
+
+        for (int i = 0; i < sideMirrorTestList.Count; i++)
+        {
+            dictionary[keys[0]] = sideMirrorTestList[i].time1;
+            dictionary[keys[1]] = sideMirrorSuccessed[i];
+            lists.Add(new Dictionary<string, object>(dictionary));
+        }
+        CSV.Write(lists, "_MyAssets/CSV/" + ID + "/SideMirror/TestSummary");
+    }
+
+    public static void SaveSideMirrorData()
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/_MyAssets/CSV/" + ID))
+            AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", ID);
+
+        if (!AssetDatabase.IsValidFolder("Assets/_MyAssets/CSV/" + ID + "/SideMirror"))
+            AssetDatabase.CreateFolder("Assets/_MyAssets/CSV/" + ID, "SideMirror");
+
+        SideMirrorSummaryWrite();
+
+        for (int i = 0; i < sideMirrorTestList.Count; i++)
+        {
+            JsonSave.Save(ID, "SideMirror", (i + 1).ToString(), sideMirrorTestList[i]);
+        }
+
+        AssetDatabase.Refresh();
+    }
+
+
+    public static void JsonToCSV()
+    {
+        string[] IDs = AssetDatabase.GetSubFolders("Assets/_MyAssets/CSV");
+
+        foreach (string id in IDs)
+        {
+            string[] sets = AssetDatabase.GetSubFolders(id);
+            DirectoryInfo id_dir = new DirectoryInfo(id);
+            string _ID = id_dir.Name;
+
+            foreach (string set in sets)
+            {
+                DirectoryInfo dir = new DirectoryInfo(set);
+
+                FileInfo[] jsons = dir.GetFiles("*.json");
+
+                string group = dir.Name;
+
+                foreach (FileInfo j in jsons)
+                {
+                    SingleTestWrite(JsonSave.Load(j.FullName), _ID, group, j.Name.Replace(".json", ""));
+                    File.Delete(j.FullName);
+                    File.Delete(j.FullName + ".meta");
+                }
+            }
+        }
+
+        Debug.Log("convert Done");
+        AssetDatabase.Refresh();
+    }
+
+    static void SingleTestWrite(TestData data, string _ID, string group, string testName)
+    {
         var lists = CSV.Read("_MyAssets/CSVFormat/SingleTestData");
 
         Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -204,8 +266,9 @@ public class DataManager
             lists.Add(new Dictionary<string, object>(dictionary));
         }
 
-        CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + testName);
+        CSV.Write(lists, "_MyAssets/CSV/" + _ID + "/" + group + "/" + testName);
     }
+
 }
 
 #region Data Structs
@@ -246,7 +309,7 @@ public struct TestData
 /*
     public static void ThreadSaveData()
     {
-        var _TestDataDictionary = new Dictionary<TestName, TestData>(TestDataDictionary);
+        var _TestDataDictionary = new Dictionary<TestName, TestData>(testDataDictionary);
         string _ID = ID;
 
         string guid = AssetDatabase.CreateFolder("Assets/_MyAssets/CSV", _ID);

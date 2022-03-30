@@ -17,7 +17,7 @@ public class FlowManager : MonoSingleton<FlowManager>
     public TestClass sls;
     public TestClass assembly;
 
-    public GameObject VRcamera;
+    //public GameObject VRcamera;
 
     public static bool[] isTestRun = { true, true, true, true, true, true, true };
 
@@ -34,7 +34,7 @@ public class FlowManager : MonoSingleton<FlowManager>
     IEnumerator flow;
     IEnumerator Flowing()
     {
-        DataManager.TestDataDictionary = new Dictionary<TestName, TestData>();
+        DataManager.testDataDictionary = new Dictionary<TestName, TestData>();
         Controller.Init();
 
         flow = Tutorial();
@@ -80,7 +80,7 @@ public class FlowManager : MonoSingleton<FlowManager>
 
     IEnumerator Tutorial()
     {
-        yield return VR_Camera.Instance.SetCamera(startPoint);
+        yield return VR_Camera.Instance.SetCamera(startPoint,false);
 
         yield return VRUI.ShowMessage("튜토리얼을 시작합니다. 컨트롤러의 포인트를 아래의 보라색 포인트에 대고 트리거를 당기면 상호작용할 수 있습니다.");
 

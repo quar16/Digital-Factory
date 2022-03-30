@@ -17,6 +17,9 @@ public class AssemblePart : VR_Trigger
     public float posErrorRange = 0.1f;
     public float rotErrorRange = 5f;
 
+    float combineTimeSet = 3f;
+    float accuracyTimeSet = 1.5f;
+
 
     [HideInInspector]
     public bool isCombine = false;
@@ -77,11 +80,11 @@ public class AssemblePart : VR_Trigger
             if (PX && PY && PZ && EX && EY && EZ)
                 combineAccuracy += Time.deltaTime;
 
-            if (combineTime >= 5)
+            if (combineTime >= combineTimeSet)
             {
                 transform.parent = combineTarget;
 
-                if (combineAccuracy >= 2.5f)
+                if (combineAccuracy >= accuracyTimeSet)
                 {
                     transform.localPosition = Vector3.zero;
                     transform.localEulerAngles = Vector3.zero;
@@ -100,14 +103,14 @@ public class AssemblePart : VR_Trigger
         else
         {
             resetCount++;
-            if (resetCount >= 5)
+            if (resetCount >= 10)
             {
                 resetCount = 0;
                 combineTime = 0;
                 combineAccuracy = 0;
             }
         }
-        float t = combineTime / 5f;
+        float t = combineTime / combineTimeSet;
         outline.FrontParameters.Color = new Color(t, 1 - t, 0);
     }
 

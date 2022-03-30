@@ -19,7 +19,6 @@ public class VR_Camera : MonoSingleton<VR_Camera>
         transform.position = new Vector3(delta.x, 0, delta.z);
 
 
-
         if (withEffect)
             yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
     }

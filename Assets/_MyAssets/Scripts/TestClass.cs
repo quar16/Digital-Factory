@@ -11,13 +11,11 @@ public class TestClass : MonoBehaviour
     protected TestData testData;
 
     bool testProcess = false;
-    float testStartTime;
 
     public IEnumerator TestFlowing()
     {
         yield return VR_Camera.Instance.SetCamera(pivot);
 
-        testStartTime = Time.time;
         testProcess = true;
         testData.Init();
 
@@ -27,7 +25,7 @@ public class TestClass : MonoBehaviour
 
         testProcess = false;
         yield return null;
-        DataManager.TestDataDictionary.Add(testName, testData);
+        DataManager.testDataDictionary.Add(testName, testData);
     }
 
     public IEnumerator TestRecording()

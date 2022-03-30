@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class JsonSave
 {
-    public static void Save(string ID, TestName testName, TestData content)
+    public static void Save(string ID, string group, string testName, TestData content)
     {
-        string filePath = "Assets/_MyAssets/CSV/" + ID + "/" + testName.ToString() + ".json";
+        string filePath = "Assets/_MyAssets/CSV/" + ID + "/" + group + "/" + testName + ".json";
 
         string dataAsJson = JsonUtility.ToJson(content);
 

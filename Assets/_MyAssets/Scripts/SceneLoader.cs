@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum SCENE { MAIN, FACTORY, RECORD }
+public enum SCENE { MAIN, FACTORY, SIDEMIRROR, RECORD }
 
 public class SceneLoader : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    static string[] scenes = { "MainScene", "FactoryScene", "RecordScene" };
+    static string[] scenes = { "MainScene", "FactoryScene", "SideMirrorScene", "RecordScene" };
 
     public static bool isLoad = false;
 
