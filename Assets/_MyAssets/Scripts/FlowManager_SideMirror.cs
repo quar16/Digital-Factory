@@ -33,7 +33,9 @@ public class FlowManager_SideMirror : MonoSingleton<FlowManager_SideMirror>
         {
             nowCount++;
             Test_SideMirror tsm = Instantiate(sideMirrorTest);
-            
+
+            yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
+
             flow = tsm.TestFlowing();
             yield return StartCoroutine(flow);
 

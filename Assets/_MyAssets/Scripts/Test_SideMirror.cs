@@ -13,9 +13,6 @@ public class Test_SideMirror : MonoBehaviour
 
     public IEnumerator TestFlowing()
     {
-        yield return VR_Camera.Instance.SetCamera(pivot, false);
-        yield return SceneLoader.Instance.SceneChangeEffectShowing(false);
-
         testProcess = true;
         testData.Init();
 

@@ -14,8 +14,8 @@ public class AssemblePart : VR_Trigger
 
     public int assembleIndex;
 
-    public float posErrorRange = 0.1f;
-    public float rotErrorRange = 5f;
+    float posErrorRange = 0.1f;
+    float rotErrorRange = 5f;
 
     float combineTimeSet = 3f;
     float accuracyTimeSet = 1.5f;
